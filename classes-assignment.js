@@ -64,12 +64,6 @@ const rental1 = new Rental(car1, "Bridget", "2022-01-01", "2022-01-25");
 const rentalDuration = rental1.calculateRentalDuration();
 console.log(rentalDuration); 
 
-
-
-
-
-
-
 // 3) Create an instance of the Car class or function constructor for a car in the
 // inventory. Then, create an instance of the Rental class or function constructor for
 // a rental involving the car you created. Finally, calculate the rental duration using
@@ -95,19 +89,14 @@ class Question{
     checkAnswer(answer){
         return answer === this.correctAnswer;
 
-
-
-    }
-
-    
+    } 
 
 }
 
-
-
-
-
-
+const question = new Question("Where is AkiraChix located?", ["Meru", "Masaimara", "Nairobi", "Eldoret"], "Nairobi");
+const userAnswer = "Nairobi";
+const isCorrect = question.checkAnswer(userAnswer);
+console.log(isCorrect); 
 
 // 2. Create a Quiz class with the following properties:
 // ● questions(array):An array of Question objects.
@@ -122,51 +111,32 @@ class Question{
 // ● submitAnswer: Takes a user's answer as a parameter, checks if the answer is
 // correct using the checkAnswer method of the Question class, and updates the
 // score if the answer is correct.
-class Quiz {
-    constructor() {
+class Quiz{
+  constructor(){
       this.questions = [];
       this.currentQuestionIndex = 0;
       this.score = 0;
-    }
-  
-    addQuestion(question) {
+  }
+  addQuestion(question){
       this.questions.push(question);
-    }
+  }
+  nextQuestion(){
+      this.currentQuestionIndex++;
+  }
+  submitAnswer(userAnswer) {
+      const currentQuestion = this.questions[this.currentQuestionIndex];
+      if (currentQuestion.checkAnswer(userAnswer)) {
+        this.score++;
+      }
+  }
+}
+const quiz1 = new Quiz();
+const question1 = new Question("What is the capital of Uganda?", ["Kampala", "Wakiso", "Jinja", "Mubende"], "Kampala");
+const question2 = new Question("What is the location of Kenya?", ["SouthAfrica", "WestAfrica", "NorthAfrica", "EastAfrica"], "EastAfrica");
+quiz1.addQuestion(question1);
+quiz1.addQuestion(question2);
 
-    nextQuestion() {
-        this.currentQuestionIndex++;
-      }
-      submitAnswer(answer) {
-        const currentQuestion = this.questions[this.currentQuestionIndex];
-        if (currentQuestion.checkAnswer(answer)) {
-          this.score++;
-        }
-        this.nextQuestion();
-      }
-  }
-  const question1 = new Question(
-    "What is the capital of Uganda?",
-    ["London", "Kampala", "Berlin", "Madrid"],
-   "Kampala"
-  );
-  console.log(question1)
-  
-  const question2 = new Question(
-    "Which language defines a function as def?",
-    ["Java", "Kotlin", "C+", "Python"],
-   "Python"
-  );
-  console.log(question2)
-  const quiz = new Quiz();
-  quiz.addQuestion(question1);
-  quiz.addQuestion(question2);
-  
-  while (quiz.currentQuestionIndex < quiz.questions.length) {
-    const currentQuestion = quiz.questions[quiz.currentQuestionIndex];
-    console.log(currentQuestion.text);
-    console.log(currentQuestion.options.join(", "));
-    const answer = prompt("Enter your answer:");
-    quiz.submitAnswer(answer);
-  }
-  
-  console.log(`Your score is ${quiz.score} out of ${quiz.questions.length}.`);
+quiz1.submitAnswer("Kampala");
+quiz1.nextQuestion();
+quiz1.submitAnswer("EastAfrica");
+console.log(quiz1.score);
